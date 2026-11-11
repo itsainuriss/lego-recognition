@@ -1,0 +1,22 @@
+# core pipeline (segmentation, colour, baseline, set matching)
+numpy
+opencv-python-headless
+scikit-image
+scikit-learn
+pandas
+pyyaml
+joblib
+matplotlib
+
+# shape CNN (train on Kaggle; CPU is enough for inference)
+torch
+torchvision
+timm
+
+# app
+streamlit
+
+# optional
+wandb        # experiment tracking (--wandb)
+grad-cam     # scripts/gradcam.py
+pytest

@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+.venv/
+data/*
+!data/README.md
+models/
+results/
+wandb/
+.ipynb_checkpoints/

@@ -1,0 +1,43 @@
+# Pipeline settings. Tune these once for your fixed camera setup.
+
+capture:
+  # Where the grey card lies in every photo, as fractions of image width/height
+  # [x0, y0, x1, y1]. With a fixed camera the card is always in the same place.
+  # Set to null to skip white balance (not recommended).
+  grey_card_roi: [0.02, 0.02, 0.14, 0.14]
+  # Target value of the grey card after correction (18 % grey in sRGB ~ 119).
+  grey_target: 119
+  # Resize so the long side is at most this many pixels (speed).
+  max_side: 2000
+
+segment:
+  # Bricks smaller/larger than this share of the image area are ignored.
+  min_area_frac: 0.0008
+  max_area_frac: 0.25
+  # How different from the background a pixel must be (Lab distance).
+  # null = choose automatically with Otsu.
+  diff_threshold: null
+  # Morphology kernel size (pixels) for closing small holes.
+  close_kernel: 7
+  # Split touching bricks with a watershed (helps with light contact, not piles).
+  split_touching: true
+  # Extra margin around each crop (fraction of the crop size).
+  crop_padding: 0.15
+
+colour:
+  palette: configs/colors.csv
+  # Erode the brick mask by this many pixels before measuring (avoid edges/shadows).
+  erode: 4
+  # A brick is flagged "unsure" if the best colour is farther than this (CIEDE2000) ...
+  max_delta_e: 18.0
+  # ... or the second-best colour is closer than this margin.
+  min_margin: 4.0
+
+shape:
+  # "cnn" (needs PyTorch + a checkpoint) or "baseline" (HOG + SVM).
+  method: cnn
+  cnn_checkpoint: models/shape_cnn.pt
+  baseline_model: models/shape_baseline.joblib
+  image_size: 224
+  # Below this confidence the part is flagged "unsure".
+  min_confidence: 0.6

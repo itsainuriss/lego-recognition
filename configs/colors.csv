@@ -1,0 +1,16 @@
+rb_color_id,name,r,g,b
+0,Black,5,19,29
+1,Blue,0,85,191
+2,Green,35,120,65
+4,Red,201,26,9
+14,Yellow,242,205,55
+15,White,255,255,255
+19,Tan,228,205,158
+25,Orange,254,138,24
+27,Lime,187,233,11
+70,Reddish Brown,88,42,18
+71,Light Bluish Gray,160,165,169
+72,Dark Bluish Gray,108,110,104
+104,Bright Pink,228,173,200
+272,Dark Blue,10,52,99
+322,Medium Azure,54,174,191
