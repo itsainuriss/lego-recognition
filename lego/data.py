@@ -30,7 +30,17 @@ def class_from_filename(stem: str) -> str:
 
 
 def _flat_classes(d: Path) -> set[str]:
-    return {class_from_filename(p.stem) for p in d.iterdir() if p.is_file() and p.suffix.lower() in IMG_EXT and p.name[:1].isdigit()}
+    """Classes of a flat folder ('<part> <name> <nr>.png'). Empty unless it really looks
+    like one: names with at least two words, and several images per class (a class
+    folder full of '0001.png' files must not count as 400 classes)."""
+    counts: dict[str, int] = {}
+    for p in d.iterdir():
+        if p.is_file() and p.suffix.lower() in IMG_EXT and p.name[:1].isdigit() and len(p.stem.split()) >= 2:
+            c = class_from_filename(p.stem)
+            counts[c] = counts.get(c, 0) + 1
+    if len(counts) < 2 or sum(counts.values()) / len(counts) < 5:
+        return set()
+    return set(counts)
 
 
 def list_image_folder(root, classes: list[str] | None = None):

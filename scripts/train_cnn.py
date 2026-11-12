@@ -155,6 +155,9 @@ def main():
                 keep.append(i)
         paths, labels = [paths[i] for i in keep], [labels[i] for i in keep]
     print(f"renders: {len(paths)} images, {len(classes)} classes from {root}")
+    if len(classes) < 2 or len(paths) < 2 * len(classes):
+        sys.exit(f"Could not find the render dataset under {args.renders} (found {len(paths)} images, {len(classes)} classes). "
+                 f"Check the path, or run:  !ls -R {args.renders} | head -50")
     tr, va = stratified_split(labels, 0.1, args.seed)
     r_train = BrickDataset([paths[i] for i in tr], [labels[i] for i in tr], args.img, True, args.aug)
     r_val = BrickDataset([paths[i] for i in va], [labels[i] for i in va], args.img, True, "none", cache=True)
